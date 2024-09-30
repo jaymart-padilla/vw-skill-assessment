@@ -28,11 +28,16 @@ class LoginPage {
   }
 
   async fillForm() {
-    const username = "group-devs@virtual-wonders.com"
+    const email = "group-devs@virtual-wonders.com"
     const password = "demo"
 
-    await this.emailInput.fill(username);
+    await this.emailInput.fill(email);
+    await expect(this.emailInput).not.toBeEmpty()
+    await expect(this.emailInput).toHaveValue(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}$/)
+
     await this.passwordInput.fill(password);
+    await expect(this.emailInput).not.toBeEmpty()
+    await expect(this.passwordInput).toHaveValue(password)
   }
 
   async submitForm() {
