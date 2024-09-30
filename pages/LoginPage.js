@@ -7,28 +7,31 @@ class LoginPage {
   constructor(page) {
     this.page = page;
 
-    this.usernameInput = page.locator('[data-test="username"]');
-    this.passwordInput = page.locator('[data-test="password"]');
-    this.submitBtn = page.locator('[data-test="login-button"]')
+    this.signInBtn = page.getByRole('link', { name: 'Sign in' })
+    this.emailInput = page.getByLabel('Email');
+    this.passwordInput = page.getByLabel('Password');
+    this.submitBtn = page.getByRole('button', { name: 'Login' });
   }
 
   async navigate() {
-    const url = `https://www.saucedemo.com/`;
+    const url = 'https://sandbox.yourfreedomprojecthub.com/'
     await this.page.goto(url);
-    await expect(this.page).toHaveURL(url);
+
+    await expect.soft(this.signInBtn).toBeVisible();
+    await this.signInBtn.click();
   }
 
   async checkFormVisible() {
-    await expect.soft(this.usernameInput).toBeVisible();
-    await expect.soft(this.usernameInput).toBeVisible();
+    await expect.soft(this.emailInput).toBeVisible();
+    await expect.soft(this.passwordInput).toBeVisible();
     await expect.soft(this.submitBtn).toBeVisible();
   }
 
   async fillForm() {
-    const username = "standard_user"
-    const password = "secret_sauce"
+    const username = "group-devs@virtual-wonders.com"
+    const password = "demo"
 
-    await this.usernameInput.fill(username);
+    await this.emailInput.fill(username);
     await this.passwordInput.fill(password);
   }
 
